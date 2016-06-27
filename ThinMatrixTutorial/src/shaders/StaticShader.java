@@ -12,7 +12,8 @@ public class StaticShader extends ShaderProgramm{
 
 	@Override
 	protected void bindAttributes() {
-		super.bindAttribute(0, "position");	//connect position variable to 0-Attribute
+		super.bindAttribute(0, "position");			//connect position variable to 0-Attribute of VB0
+		super.bindAttribute(1, "textureCoords");	//connect texturecoords to 1-Attribute of VBO
 	}
 
 }

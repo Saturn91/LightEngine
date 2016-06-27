@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL20;
 
 public abstract class ShaderProgramm {
 	
-	private int programmID;
+	protected int programmID;
 	private int vertexShaderID;
 	private int fragmentShaderID;
 	
@@ -18,8 +18,10 @@ public abstract class ShaderProgramm {
 		programmID = GL20.glCreateProgram();
 		GL20.glAttachShader(programmID, vertexShaderID);
 		GL20.glAttachShader(programmID, fragmentShaderID);
+		bindAttributes();
 		GL20.glLinkProgram(programmID);
 		GL20.glValidateProgram(programmID);
+		
 	}
 	
 	public void start(){

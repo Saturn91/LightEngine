@@ -1,27 +1,58 @@
+/*
+ * VBO's:
+ * 0 = Position
+ * 1 = Texturechords
+ */
+
 package renderEngine;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
+import models.RawModel;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
 
 public class Loader {
 	
 	private List<Integer> vaos = new ArrayList<>();
 	private List<Integer> vbos = new ArrayList<>();
+	private List<Integer> textures = new ArrayList<>();
 	
-	public RawModel loadToVAO(float[] positions, int[] indices){
+	public RawModel loadToVAO(float[] positions, float[] textureChoords, int[] indices){
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices);
-		storeDataInAttributeList(0, positions);				//we save the data in list 0!
+		storeDataInAttributeList(0, 3, positions);			//we save the Position in list 0!
+		storeDataInAttributeList(1, 2, textureChoords);		//we save the textures in list 1!		
 		unbindVAO();
-		return new RawModel(vaoID, indices.length);		// /3 because each Point has 3 - coordinates
+		return new RawModel(vaoID, indices.length);
+	}
+	
+	public int loadTexture(String fileName){
+		Texture texture = null;
+		try {
+			texture = TextureLoader.getTexture("PNG", new FileInputStream("res/"+fileName + ".png"));
+		} catch (FileNotFoundException e) {
+			System.err.println("Loader: not able to load: " + "res/"+fileName + ".png");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("Loader: not able to load: " + "res/"+fileName + ".png");
+			e.printStackTrace();
+		}
+		int textureID = texture.getTextureID();
+		textures.add(textureID);
+		return textureID;
 	}
 	
 	public void cleanUp(){
@@ -29,8 +60,12 @@ public class Loader {
 			GL30.glDeleteVertexArrays(vao);
 		}
 		
-		for(int vao: vaos){
-			GL15.glDeleteBuffers(vao);
+		for(int vbo: vbos){
+			GL15.glDeleteBuffers(vbo);
+		}
+		
+		for(int texture: textures){
+			GL11.glDeleteTextures(texture);
 		}
 	}
 	
@@ -41,13 +76,13 @@ public class Loader {
 		return voaID;
 	}
 	
-	private void storeDataInAttributeList(int attributNumber, float[] data){
+	private void storeDataInAttributeList(int attributNumber, int coordinateSize, float[] data){
 		int vboID = GL15.glGenBuffers();
 		vbos.add(vboID);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
 		FloatBuffer buffer = storeDataInFloatBuffer(data);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
-		GL20.glVertexAttribPointer(attributNumber, 3, GL11.GL_FLOAT, false, 0, 0);
+		GL20.glVertexAttribPointer(attributNumber, coordinateSize, GL11.GL_FLOAT, false, 0, 0);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);	//unbind Buffer
 	}
 	
