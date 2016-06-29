@@ -104,12 +104,13 @@ public class MainGameLoop {
 		ModelTexture texture = new ModelTexture(loader.loadTexture("image"));
 		TexturedModel staticModel = new TexturedModel(model, texture);
 		
-		Entity entity = new Entity(staticModel, new Vector3f(0,0,-1), 0, 0, 0, 1);
+		Entity entity = new Entity(staticModel, new Vector3f(0,0,-5), 0, 0, 0, 1);
 		
 		Camera camera = new Camera();
 
 		//actual Gameloop
 		while(!Display.isCloseRequested()){
+			entity.increaseRotation(1, 1, 0);
 			camera.move();
 			renderer.prepare();	
 			shader.start();
