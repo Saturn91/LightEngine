@@ -4,7 +4,9 @@ import models.RawModel;
 import models.TexturedModel;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector3f;
 
+import entity.Entity;
 import Textures.ModelTexture;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
@@ -19,8 +21,8 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		
 		Loader loader = new Loader();
-		Renderer renderer = new Renderer();
 		StaticShader shader = new StaticShader();
+		Renderer renderer = new Renderer(shader);
 		
 		//Pseudo Data
 		float[] vertices = {
@@ -45,13 +47,17 @@ public class MainGameLoop {
 		
 		RawModel model = loader.loadToVAO(vertices, textureCoords, indices);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("image"));
-		TexturedModel texturedModel = new TexturedModel(model, texture);
+		TexturedModel staticModel = new TexturedModel(model, texture);
+		
+		Entity entity = new Entity(staticModel, new Vector3f(0,0,-1), 0, 0, 0, 1);
 
 		//actual Gameloop
 		while(!Display.isCloseRequested()){
-			shader.start();
+			entity.increasePosition(0, 0, -0.1f);
+			//entity.increaseRotation(1, 1, 1);
 			renderer.prepare();	
-			renderer.render(texturedModel);
+			shader.start();
+			renderer.render(entity, shader);
 			shader.stop();
 			DisplayManager.updateDisplay();
 		}
