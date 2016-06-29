@@ -32,9 +32,9 @@ public Renderer(StaticShader shader) {
 }
 	
 	public void prepare(){
-		GL11.glEnable(GL11.GL_DEPTH_TEST);		//fix rendering of different Triangels on top of each other
+		GL11.glEnable(GL11.GL_DEPTH_TEST);			//fix rendering of different Triangels on top of each other
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glClearColor(1, 0, 0, 1); 		//red Background
+		GL11.glClearColor(0, 0, 0, 1); 				//red Background
 	}
 	
 	public void render (Entity entity, StaticShader shader){
@@ -46,7 +46,7 @@ public Renderer(StaticShader shader) {
 		Matrix4f transformationMatrix = Maths.createTransformation(entity.getPosition(), entity.getRotX(), //getPos and rot!
 				entity.getRotY(), entity.getRotZ(), entity.getScale());	
 		shader.loadTransformationMatrix(transformationMatrix);
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);	//Activate Texture on Texture0 wich is de default of Texturesampler in fragmentshader!
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);	//Activate Texture on Texture0 wich is the default of Texturesampler in fragmentshader!
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture().getID());
 		GL11.glDrawElements(GL11.GL_TRIANGLES, rawModel.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 		GL20.glDisableVertexAttribArray(0);		

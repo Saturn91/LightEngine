@@ -5,9 +5,10 @@ in vec2 pass_textureCoords; //same name as the out in vertexShader!!
 out vec4 out_Colour;
 
 uniform sampler2D textureSampler;	//is per default on Texture 0 -> see also renderer 
+uniform vec2 light;
 
 void main(void){
 
-	out_Colour = texture(textureSampler, pass_textureCoords);
+	out_Colour = texture(textureSampler, pass_textureCoords)*light.x;
 
 }

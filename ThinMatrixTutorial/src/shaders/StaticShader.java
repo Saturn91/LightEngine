@@ -1,6 +1,7 @@
 package shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 
 import toolbox.Maths;
 import entity.Camera;
@@ -13,6 +14,8 @@ public class StaticShader extends ShaderProgramm{
 	private int location_transformationMatrix;
 	private int location_projectionMatrix;
 	private int location_viewMatrix;
+	
+	private float light = 1;
 
 	public StaticShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -22,6 +25,12 @@ public class StaticShader extends ShaderProgramm{
 	protected void bindAttributes() {
 		super.bindAttribute(0, "position");			//connect position variable to 0-Attribute of VB0
 		super.bindAttribute(1, "textureCoords");	//connect texturecoords to 1-Attribute of VBO
+	}
+	
+	public void setLight(float light){
+		this.light = light;
+		Vector2f vec = new Vector2f(light, 0);
+		super.setShaderVariable2f("light", vec);
 	}
 
 	@Override

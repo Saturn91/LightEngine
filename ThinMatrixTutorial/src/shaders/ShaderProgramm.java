@@ -8,6 +8,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public abstract class ShaderProgramm {
@@ -34,6 +35,11 @@ public abstract class ShaderProgramm {
 	
 	protected int getUniformLocation(String uniformName){
 		return GL20.glGetUniformLocation(programmID, uniformName);
+	}
+	
+	public void setShaderVariable2f(String name, Vector2f vector){
+		int loc2 = GL20.glGetUniformLocation(programmID, "light");
+	    GL20.glUniform2f(loc2, vector.x, vector.y);
 	}
 	
 	public void start(){
@@ -105,5 +111,4 @@ public abstract class ShaderProgramm {
 		}
 		return shaderID;
 	}
-	
 }
