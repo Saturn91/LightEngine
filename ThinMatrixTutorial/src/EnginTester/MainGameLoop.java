@@ -6,6 +6,7 @@ import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
+import entity.Camera;
 import entity.Entity;
 import Textures.ModelTexture;
 import renderEngine.DisplayManager;
@@ -50,13 +51,15 @@ public class MainGameLoop {
 		TexturedModel staticModel = new TexturedModel(model, texture);
 		
 		Entity entity = new Entity(staticModel, new Vector3f(0,0,-1), 0, 0, 0, 1);
+		
+		Camera camera = new Camera();
 
 		//actual Gameloop
 		while(!Display.isCloseRequested()){
-			entity.increasePosition(0, 0, -0.1f);
-			//entity.increaseRotation(1, 1, 1);
+			camera.move();
 			renderer.prepare();	
 			shader.start();
+			shader.loadViewMatrix(camera);
 			renderer.render(entity, shader);
 			shader.stop();
 			DisplayManager.updateDisplay();
