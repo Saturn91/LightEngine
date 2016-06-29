@@ -42,6 +42,11 @@ public abstract class ShaderProgramm {
 	    GL20.glUniform2f(loc2, vector.x, vector.y);
 	}
 	
+	public void setShaderVariable3f(String name, Vector3f vector){
+		int loc2 = GL20.glGetUniformLocation(programmID, "light");
+	    GL20.glUniform3f(loc2, vector.x, vector.y, vector.z);
+	}
+	
 	public void start(){
 		GL20.glUseProgram(programmID);
 	}

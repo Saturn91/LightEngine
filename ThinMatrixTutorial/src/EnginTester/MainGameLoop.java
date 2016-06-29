@@ -107,13 +107,15 @@ public class MainGameLoop {
 		Entity entity = new Entity(staticModel, new Vector3f(0,0,-5), 0, 0, 0, 1);
 		
 		Camera camera = new Camera();
-
+		
+		//Set initialize Light
+		lightvalue = new Vector3f(0.1f, 0, 0.5f);
+		
 		//actual Gameloop
 		while(!Display.isCloseRequested()){
 			entity.increaseRotation(1, 1, 0);
 			camera.move();
 			renderer.prepare();
-			updateLight();
 			shader.start();
 			shader.setLight(lightvalue);
 			shader.loadViewMatrix(camera);
@@ -127,19 +129,19 @@ public class MainGameLoop {
 		DisplayManager.closeDisplay();
 	}
 	
-	private static float lightvalue = 0.5f;
+	private static Vector3f lightvalue;
 	private static boolean rising = true;
 	public static void updateLight(){
-		if(lightvalue <= 0){
+		if(lightvalue.x <= 0){
 			rising = true;
 		}
-		if(lightvalue >= 1){
+		if(lightvalue.x >= 1){
 			rising = false;
 		}
 		if(rising){
-			lightvalue += 0.01f;
+			lightvalue.x += 0.01f;
 		}else{
-			lightvalue -= 0.01f;
+			lightvalue.x -= 0.01f;
 		}
 	}
 }
