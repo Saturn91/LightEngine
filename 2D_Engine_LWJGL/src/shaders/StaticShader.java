@@ -31,6 +31,7 @@ public class StaticShader extends ShaderProgramm{
 	public void setPointLight(Light light){
 		super.setShaderVariable2f("lightPosition", light.getPosition());
 		super.setShaderVariable3f("pointLightColor", light.getColor());
+		super.setShaderVariablef("pointLightStrenght", light.getStrenght());
 	}
 	
 	public void setLight(Vector3f light){

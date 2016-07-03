@@ -45,6 +45,10 @@ public abstract class ShaderProgramm {
 	    GL20.glUniform3f(getUniformLocation(name), vector.x, vector.y, vector.z);
 	}
 	
+	public void setShaderVariablef(String name, float value){
+		GL20.glUniform1f(getUniformLocation(name), value);
+	}
+	
 	public void start(){
 		GL20.glUseProgram(programmID);
 	}
