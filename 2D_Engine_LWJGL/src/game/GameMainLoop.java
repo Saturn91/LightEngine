@@ -33,7 +33,7 @@ public class GameMainLoop {
 	}
 	
 	private void tick() {
-		
+		game.tick();
 	}
 
 	public void close(){
