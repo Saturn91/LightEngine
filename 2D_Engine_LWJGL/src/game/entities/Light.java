@@ -7,6 +7,7 @@ public class Light {
 	private Vector2f position;
 	private Vector3f color;
 	private float strenght = 1;	
+	private float range = 3;
 	public Light(Vector2f position, Vector3f color) {
 		super();
 		this.position = position;
@@ -29,6 +30,12 @@ public class Light {
 	}
 	public void setStrenght(float strenght) {
 		this.strenght = strenght;
+	}
+	public float getRange() {
+		return range;
+	}
+	public void setRange(float range) {
+		this.range = range;
 	}
 	
 	

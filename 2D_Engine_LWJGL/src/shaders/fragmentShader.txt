@@ -10,6 +10,7 @@ uniform vec3 emviromentLight;
 uniform vec2 lightPosition;
 uniform vec3 pointLightColor;
 uniform float pointLightStrenght;
+uniform float range;
 
 void main(void){
 	//calculate Distance
@@ -21,7 +22,13 @@ void main(void){
 	
 	//calculate light
 	vec3 pointLightResult;
-	pointLightResult = pointLightColor * (1/distanceXY) * pointLightStrenght ;
+	pointLightResult = pointLightColor * (1/(distanceXY-0.01)-1/(range)) * pointLightStrenght;
+	
+	if(pointLightResult.x < 0){
+		pointLightResult.x = 0;
+		pointLightResult.y = 0;
+		pointLightResult.z = 0;
+	}
 	vec4 light_4f;
 	light_4f.x = emviromentLight.x + pointLightResult.x;
 	light_4f.y = emviromentLight.y + pointLightResult.y;

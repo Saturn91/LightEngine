@@ -25,8 +25,8 @@ public class Map {
 		
 		Game.addEntity(new GameObject("Test", new Vector2f(0.0f, 0.0f), 1.0f));
 		
-		for(int x = 0; x < 10; x++){
-			for(int y = 0; y < 10; y++){
+		for(int x = 0; x < 100; x++){
+			for(int y = 0; y < 100; y++){
 				Game.addEntity(new GameObject("Test", new Vector2f(x, y), 1.0f));
 			}
 		}

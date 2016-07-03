@@ -10,7 +10,7 @@ public class Camera {
 	private Vector3f position = new Vector3f(0,0,0);
 	private float pitch;	//High of Camera
 	private float yaw;		//aiming left an d right
-	private float speed = 0.001f;
+	private float speed = 0.005f;
 	
 	public Camera() {
 		
