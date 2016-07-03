@@ -17,6 +17,7 @@ uniform float screenFormat;
 
 void main(void){
 	//calculate Distance
+	
 	float distanceX = lightPosition.x - pass_position.x;
 	float distanceY = (lightPosition.y - pass_position.y) * screenFormat;
 	vec2 distance = vec2(distanceX, distanceY);

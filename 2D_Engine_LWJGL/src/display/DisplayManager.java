@@ -13,6 +13,11 @@ public class DisplayManager {
 	private int height;
 	private int sync = 120;
 	
+	private long lastTimeTickLine = 0;
+	private long nowTime;
+	private long delta = 0;
+	private long longestDelta = 0;
+	
 	public DisplayManager(String gameTitle, int width, int height) {
 		this.gameTitle = gameTitle;
 		this.width = width;
@@ -39,7 +44,22 @@ public class DisplayManager {
 		GL11.glViewport(0, 0, width, height);		
 	}
 	
+	private int tickCounter = 0;
+	private long lastTick = 0;
 	public void updateDisplay(){
+		nowTime = System.currentTimeMillis();
+		tickCounter ++;
+		delta = nowTime - lastTick;
+		if(delta > longestDelta){
+			longestDelta = delta;
+		}
+		if(nowTime - lastTimeTickLine >= 1000){
+			System.out.println("ticks: " + tickCounter + " longest delta: " + longestDelta + "ms");
+			tickCounter = 0;
+			longestDelta = 0;
+			lastTimeTickLine = nowTime;
+		}
+		lastTick = System.currentTimeMillis();
 		Display.sync(sync);
 		Display.update();
 	}
