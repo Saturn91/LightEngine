@@ -3,10 +3,12 @@ package game.main;
 import game.entities.Camera;
 import game.entities.Entity;
 import game.entities.GameObject;
+import game.entities.Light;
 import game.level.Map;
 
 import java.util.ArrayList;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import shaders.StaticShader;
@@ -20,6 +22,7 @@ public class Game {
 	private StaticShader shader;
 	private Map map;
 	private Camera camera;
+	private Light light;
 	
 	public Game() {
 		init();
@@ -35,7 +38,8 @@ public class Game {
 		renderer.prepare();
 		//Start Shaderprogramm
 		shader.start();
-		shader.setLight(new Vector3f(0.5f, 0.5f, 1));
+		shader.setLight(new Vector3f(0, 0, 0));
+		shader.setPointLight(light);
 		shader.loadViewMatrix(camera);
 		for(GameObject g: gameObjects){
 			renderer.render(g, shader);
@@ -66,5 +70,6 @@ public class Game {
 		renderer = new Renderer(shader);
 		renderer.setZoom(10);
 		map = new Map();
+		light = new Light(new Vector2f(-5f,0f), new Vector3f(1f,1f,1f));
 	}
 }

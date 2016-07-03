@@ -1,0 +1,35 @@
+package game.entities;
+
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
+
+public class Light {
+	private Vector2f position;
+	private Vector3f color;
+	private float strenght;	
+	public Light(Vector2f position, Vector3f color) {
+		super();
+		this.position = position;
+		this.color = color;
+	}
+	public Vector2f getPosition() {
+		return position;
+	}
+	public void setPosition(Vector2f position) {
+		this.position = position;
+	}
+	public Vector3f getColor() {
+		return color;
+	}
+	public void setColor(Vector3f color) {
+		this.color = color;
+	}
+	public float getStrenght() {
+		return strenght;
+	}
+	public void setStrenght(float strenght) {
+		this.strenght = strenght;
+	}
+	
+	
+}

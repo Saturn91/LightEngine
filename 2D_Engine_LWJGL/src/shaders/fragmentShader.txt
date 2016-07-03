@@ -1,17 +1,33 @@
 #version 400 core
 
 in vec2 pass_textureCoords; //same name as the out in vertexShader!!
+in vec3 pass_position;
 
 out vec4 out_Colour;
 
 uniform sampler2D textureSampler;	//is per default on Texture 0 -> see also renderer 
 uniform vec3 emviromentLight;
+uniform vec2 lightPosition;
+uniform vec3 pointLightColor;
+uniform float pointLightStrenght;
 
 void main(void){
+	//calculate Distance
+	float distanceX = lightPosition.x - pass_position.x;
+	float distanceY = lightPosition.y - pass_position.y;
+	vec2 distance = vec2(distanceX, distanceY);
+	
+	float distanceXY = length(distance);
+	
+	//calculate light
+	vec3 pointLightResult;
+	pointLightResult = pointLightColor * (1/distanceXY) * 2;
 	vec4 light_4f;
-	light_4f.x = emviromentLight.x;
-	light_4f.y = emviromentLight.y;
-	light_4f.z = emviromentLight.z;
+	light_4f.x = emviromentLight.x + pointLightResult.x;
+	light_4f.y = emviromentLight.y + pointLightResult.y;
+	light_4f.z = emviromentLight.z + pointLightResult.z;
+	
+	//calculate pixel color on screen
 	out_Colour = texture(textureSampler, pass_textureCoords)*light_4f;
 
 }

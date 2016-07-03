@@ -1,6 +1,7 @@
 package shaders;
 
 import game.entities.Camera;
+import game.entities.Light;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
@@ -25,6 +26,11 @@ public class StaticShader extends ShaderProgramm{
 	protected void bindAttributes() {
 		super.bindAttribute(0, "position");			//connect position variable to 0-Attribute of VB0
 		super.bindAttribute(1, "textureCoords");	//connect texturecoords to 1-Attribute of VBO
+	}
+	
+	public void setPointLight(Light light){
+		super.setShaderVariable2f("lightPosition", light.getPosition());
+		super.setShaderVariable3f("pointLightColor", light.getColor());
 	}
 	
 	public void setLight(Vector3f light){
