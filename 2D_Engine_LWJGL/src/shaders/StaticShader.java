@@ -1,5 +1,6 @@
 package shaders;
 
+import game.GameMainLoop;
 import game.entities.Camera;
 import game.entities.Light;
 

@@ -1,5 +1,7 @@
 package shaders;
 
+import game.GameMainLoop;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.nio.FloatBuffer;
@@ -51,6 +53,12 @@ public abstract class ShaderProgramm {
 	
 	public void start(){
 		GL20.glUseProgram(programmID);
+		setScreenFormat();
+	}
+	
+	public void setScreenFormat(){
+		float format = (float) GameMainLoop.WINDOW_HEIGHT/ (float) GameMainLoop.WINDOW_WIDTH;
+		setShaderVariablef("screenFormat", format);
 	}
 	
 	public void stop(){

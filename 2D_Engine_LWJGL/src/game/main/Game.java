@@ -38,7 +38,7 @@ public class Game {
 		renderer.prepare();
 		//Start Shaderprogramm
 		shader.start();
-		shader.setLight(new Vector3f(0,0,0));
+		shader.setLight(new Vector3f(0f,0f,0f));
 		shader.setPointLight(light);
 		shader.loadViewMatrix(camera);
 		for(GameObject g: gameObjects){
