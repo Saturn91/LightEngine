@@ -5,13 +5,13 @@ in vec2 pass_textureCoords; //same name as the out in vertexShader!!
 out vec4 out_Colour;
 
 uniform sampler2D textureSampler;	//is per default on Texture 0 -> see also renderer 
-uniform vec3 light;
+uniform vec3 emviromentLight;
 
 void main(void){
 	vec4 light_4f;
-	light_4f.x = light.x;
-	light_4f.y = light.y;
-	light_4f.z = light.z;
+	light_4f.x = emviromentLight.x;
+	light_4f.y = emviromentLight.y;
+	light_4f.z = emviromentLight.z;
 	out_Colour = texture(textureSampler, pass_textureCoords)*light_4f;
 
 }

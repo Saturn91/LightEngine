@@ -28,7 +28,7 @@ public class StaticShader extends ShaderProgramm{
 	}
 	
 	public void setLight(Vector3f light){
-		super.setShaderVariable3f("light", light);
+		super.setShaderVariable3f("emviromentLight", light);
 	}
 
 	@Override
