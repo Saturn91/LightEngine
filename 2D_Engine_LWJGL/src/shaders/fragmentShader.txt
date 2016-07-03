@@ -6,7 +6,7 @@ in vec3 pass_position;
 out vec4 out_Colour;
 
 uniform sampler2D textureSampler;	//is per default on Texture 0 -> see also renderer 
-uniform vec3 emviromentLight;
+uniform vec3 enviromentLight;
 uniform vec2 lightPosition;
 uniform vec3 pointLightColor;
 uniform float pointLightStrenght;
@@ -33,9 +33,9 @@ void main(void){
 		pointLightResult.z = 0;
 	}
 	vec4 light_4f;
-	light_4f.x = emviromentLight.x + pointLightResult.x;
-	light_4f.y = emviromentLight.y + pointLightResult.y;
-	light_4f.z = emviromentLight.z + pointLightResult.z;
+	light_4f.x = enviromentLight.x + pointLightResult.x;
+	light_4f.y = enviromentLight.y + pointLightResult.y;
+	light_4f.z = enviromentLight.z + pointLightResult.z;
 	
 	//calculate pixel color on screen
 	out_Colour = texture(textureSampler, pass_textureCoords)*light_4f;

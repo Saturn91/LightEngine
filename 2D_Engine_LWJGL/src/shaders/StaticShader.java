@@ -18,6 +18,8 @@ public class StaticShader extends ShaderProgramm{
 	private int location_transformationMatrix;
 	private int location_projectionMatrix;
 	private int location_viewMatrix;
+	private Light cameraLight = new Light(new Vector2f(0,0), new Vector3f(1, 1, 1));
+	private Vector3f enviromentlight = new Vector3f(0, 0, 0); 
 
 	public StaticShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -29,15 +31,12 @@ public class StaticShader extends ShaderProgramm{
 		super.bindAttribute(1, "textureCoords");	//connect texturecoords to 1-Attribute of VBO
 	}
 	
-	public void setPointLight(Light light){
-		super.setShaderVariable2f("lightPosition", light.getPosition());
-		super.setShaderVariable3f("pointLightColor", light.getColor());
-		super.setShaderVariablef("pointLightStrenght", light.getStrenght());
-		super.setShaderVariablef("range", light.getRange());
+	public void configureCameraLight(Light light){
+		this.cameraLight = light;
 	}
 	
-	public void setLight(Vector3f light){
-		super.setShaderVariable3f("emviromentLight", light);
+	public void setEnviromentLight(Vector3f lightColor){
+		this.enviromentlight = lightColor;
 	}
 
 	@Override
@@ -59,6 +58,17 @@ public class StaticShader extends ShaderProgramm{
 	public void loadViewMatrix(Camera camera){
 		Matrix4f viewMatrix = Maths.createViewMatrix(camera);
 		super.loadMatrix(location_viewMatrix, viewMatrix);
+	}
+	
+	public void update(){
+		//update CameraLight
+		super.setShaderVariable2f("lightPosition", cameraLight.getPosition());
+		super.setShaderVariable3f("pointLightColor", cameraLight.getColor());
+		super.setShaderVariablef("pointLightStrenght", cameraLight.getStrenght());
+		super.setShaderVariablef("range", cameraLight.getRange());
+		
+		//update enviromentLight
+		super.setShaderVariable3f("enviromentLight", enviromentlight);
 	}
 	
 	

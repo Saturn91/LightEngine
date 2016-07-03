@@ -22,7 +22,6 @@ public class Game {
 	private StaticShader shader;
 	private Map map;
 	private Camera camera;
-	private Light light;
 	
 	public Game() {
 		init();
@@ -36,14 +35,16 @@ public class Game {
 		camera.move();
 		//Prepare Renderer
 		renderer.prepare();
+		
 		//Start Shaderprogramm
 		shader.start();
-		shader.setLight(new Vector3f(0.1f,0.1f,0.2f));
-		shader.setPointLight(light);
+		shader.update();
 		shader.loadViewMatrix(camera);
+		
 		for(GameObject g: gameObjects){
 			renderer.render(g, shader);
 		}
+		
 		shader.stop();
 	}
 	
@@ -66,12 +67,12 @@ public class Game {
 	public void init(){
 		gameObjects = new ArrayList<>();
 		shader = new StaticShader();
+		//shader.setEnviromentLight(new Vector3f(0.1f,0.1f,0.2f));
+		//Light light = new Light(.....
+		//shader.configureCameraLight(light);
 		camera = new Camera();
 		renderer = new Renderer(shader);
 		renderer.setZoom(10);
 		map = new Map();
-		light = new Light(new Vector2f(0f,0f), new Vector3f(1f,1f,1f));
-		light.setStrenght(2.5f);
-		light.setRange(7.5f);
 	}
 }
