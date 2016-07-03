@@ -33,6 +33,10 @@ void main(void){
 		pointLightResult.y = 0;
 		pointLightResult.z = 0;
 	}
+	
+	if(distanceXY < 0.01){
+		pointLightResult = pointLightColor*10;
+	}
 	vec4 light_4f;
 	light_4f.x = enviromentLight.x + pointLightResult.x;
 	light_4f.y = enviromentLight.y + pointLightResult.y;

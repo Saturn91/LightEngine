@@ -18,7 +18,7 @@ public class GameMainLoop {
 	
 	public void start(){
 		display = new DisplayManager(GAME_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
-		display.setDisplaySync(120);
+		display.setDisplaySync((int)fps);
 		game = new Game();
 		GameLoop();
 		display.closeDisplay();		

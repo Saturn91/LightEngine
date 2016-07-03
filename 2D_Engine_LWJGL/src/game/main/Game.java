@@ -69,9 +69,9 @@ public class Game {
 	public void init(){
 		gameObjects = new ArrayList<>();
 		shader = new StaticShader();
-		//shader.setEnviromentLight(new Vector3f(0.1f,0.1f,0.2f));
-		//Light light = new Light(.....
-		//shader.configureCameraLight(light);
+		shader.setEnviromentLight(new Vector3f(0.05f,0.05f,0.1f));
+		Light light = new Light(new Vector2f(0,0), new Vector3f(1f, 0.8f, 0.5f));
+		shader.configureCameraLight(light);
 		camera = new Camera();
 		renderer = new Renderer(shader);
 		renderer.setZoom(10);
