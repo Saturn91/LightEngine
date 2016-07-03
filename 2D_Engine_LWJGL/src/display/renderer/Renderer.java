@@ -1,6 +1,5 @@
 package display.renderer;
 
-import game.entities.Entity;
 import game.entities.GameObject;
 import game.entities.RawModel;
 import game.entities.TexturedModel;
@@ -75,5 +74,9 @@ public Renderer(StaticShader shader) {
 	
 	public void setZoom(float zoom){
 		this.zoom = zoom;
+	}
+	
+	public static float getZoom(){
+		return zoom;
 	}
 }

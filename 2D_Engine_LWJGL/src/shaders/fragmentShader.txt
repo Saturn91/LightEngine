@@ -21,7 +21,7 @@ void main(void){
 	
 	//calculate light
 	vec3 pointLightResult;
-	pointLightResult = pointLightColor * (1/distanceXY) * pointLightStrenght;
+	pointLightResult = pointLightColor * (1/distanceXY) * pointLightStrenght ;
 	vec4 light_4f;
 	light_4f.x = emviromentLight.x + pointLightResult.x;
 	light_4f.y = emviromentLight.y + pointLightResult.y;
