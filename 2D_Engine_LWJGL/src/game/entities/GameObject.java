@@ -9,15 +9,20 @@ public class GameObject {
 	private static ArrayList<String> knownEntities = new ArrayList<>();
 	private float rotZ;
 	private Vector2f position;
-	private float scale;	
+	private float scale;
+	private int layer;
+	private float renderLayer;
+	private static final float layerDistance = 0.001f;
 	
 	private String thisName;
 	
-	public GameObject(String entityType, Vector2f position, float scale) {
+	public GameObject(String entityType, Vector2f position, float scale, int layer) {
 		if(knownEntities.contains(entityType)){
 			this.scale = scale;
 			this.position = position;
 			this.thisName = entityType;
+			this.layer = layer;
+			this.renderLayer = layer*layerDistance;
 		}else{
 			System.err.println("unknown Entity <" + entityType + ">!");
 		}
@@ -67,5 +72,9 @@ public class GameObject {
 	
 	public String getName(){
 		return thisName;
+	}
+	
+	public float getRenderLayer(){
+		return renderLayer;
 	}
 }

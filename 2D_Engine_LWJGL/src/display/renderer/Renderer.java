@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import shaders.StaticShader;
@@ -46,8 +47,8 @@ public Renderer(StaticShader shader) {
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);		//Enable List 0 in VBO (positions)
 		GL20.glEnableVertexAttribArray(1);		//Enable List 1 in VBO (texturecoords)
-		Matrix4f transformationMatrix = Maths.createTransformation(new Vector3f(gameobject.getPosition().x, gameobject.getPosition().y, -zoom), 0, //getPos and rot!
-				0, gameobject.getRotZ(), gameobject.getScale());	
+		Matrix4f transformationMatrix = Maths.create2DTransformation(new Vector2f(gameobject.getPosition().x, gameobject.getPosition().y) , -zoom+gameobject.getRenderLayer(), //getPos and rot!
+				gameobject.getRotZ(), gameobject.getScale());	
 		shader.loadTransformationMatrix(transformationMatrix);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);	//Activate Texture on Texture0 wich is de default of Texturesampler in fragmentshader!
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture().getID());
