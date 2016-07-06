@@ -57,9 +57,21 @@ vec4 calculateCameraLight(){
 //************************************************/Camera**********************************************
 
 //************************************************Point Lights Array***********************************
-vec4 calculatePointLights(){
+// array of lights
+#define MAX_LIGHTS 10
+uniform int numLights;
+uniform struct Light {
+   vec4 position;
+   vec3 color; 
+   float strenght;
+   float range;
+} allLights[MAX_LIGHTS];
 
-	
+vec4 calculatePointLights(){
+	vec4 function_output;
+	for(int i = 0; i < 10; i++){
+		
+	}
 	return vec4(0,0,0,0);
 }
 
