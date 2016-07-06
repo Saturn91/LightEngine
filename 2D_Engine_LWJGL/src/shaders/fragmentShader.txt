@@ -14,6 +14,12 @@ uniform vec3 enviromentLight;
 //screen Informations
 uniform float screenFormat;
 
+//*****************************************general Light*********************************
+vec3 getPixelLight(vec3 color, float distance, float range, float strenght){
+	return vec3(color*(1/(distance-0.01)-1/(range)) * strenght);
+}
+
+
 //*****************************************Camera Light *********************************
 uniform vec2 cameraLightPosition;
 uniform vec3 cameraLightColor;
@@ -30,9 +36,8 @@ vec4 calculateCameraLight(){
 	float distanceXY = length(distance);
 	
 	//calculate light
-	vec3 cameraLightResult;
-	cameraLightResult = cameraLightColor * (1/(distanceXY-0.01)-1/(cameraLightrange)) * cameraLightStrenght;
-	
+	vec3 cameraLightResult = getPixelLight(cameraLightColor, distanceXY, cameraLightrange, cameraLightStrenght);
+
 	if(cameraLightResult.x < 0){
 		cameraLightResult.x = 0;
 		cameraLightResult.y = 0;
@@ -57,6 +62,7 @@ vec4 calculateCameraLight(){
 //************************************************/Camera**********************************************
 
 //************************************************Point Lights Array***********************************
+
 // array of lights
 #define MAX_LIGHTS 10
 uniform int numLights;
@@ -67,17 +73,32 @@ uniform struct Light {
    float range;
 } allLights[MAX_LIGHTS];
 
+in mat4 pass_view_projection;
+
 vec4 calculatePointLights(){
-	vec4 function_output;
+	vec3 function_output;
+	float distanceX;
+	float distanceY;
 	for(int i = 0; i < 10; i++){
+	
+		Light light = allLights[i];
+		
+		vec4 position = pass_view_projection * light.position;
+		distanceX = position.x - pass_position.x;
+		distanceY = position.y * screenFormat;
+		float distance = length(vec2(distanceX, distanceY));
+		vec3 lightResult = getPixelLight(light.color, distance, light.range, light.strenght);
+		if(length(lightResult) > 0){
+			function_output += lightResult;
+		}
 		
 	}
-	return vec4(0,0,0,0);
+	return vec4(function_output.x, function_output.y, function_output.z, 0);
 }
 
 void main(void){
 
 	//calculate pixel color on screen
-	out_Colour = texture(textureSampler, pass_textureCoords)* (calculateCameraLight() + enviromentLight + calculatePointLights());
+	out_Colour = texture(textureSampler, pass_textureCoords) * (calculateCameraLight() + enviromentLight + calculatePointLights());
 }
 
