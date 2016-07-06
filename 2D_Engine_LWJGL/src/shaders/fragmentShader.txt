@@ -6,16 +6,21 @@ in vec3 pass_position;
 out vec4 out_Colour;
 
 uniform sampler2D textureSampler;	//is per default on Texture 0 -> see also renderer 
+
+
 uniform vec3 enviromentLight;
+
+
+//screen Informations
+uniform float screenFormat;
+
+//*****************************************Camera Light *********************************
 uniform vec2 cameraLightPosition;
 uniform vec3 cameraLightColor;
 uniform float cameraLightStrenght;
 uniform float cameraLightrange;
 
-//screen Informations
-uniform float screenFormat;
-
-void main(void){
+vec4 calculateCameraLight(){
 	//calculate Distance
 	
 	float distanceX = cameraLightPosition.x - pass_position.x;
@@ -25,24 +30,42 @@ void main(void){
 	float distanceXY = length(distance);
 	
 	//calculate light
-	vec3 pointLightResult;
-	pointLightResult = cameraLightColor * (1/(distanceXY-0.01)-1/(cameraLightrange)) * cameraLightStrenght;
+	vec3 cameraLightResult;
+	cameraLightResult = cameraLightColor * (1/(distanceXY-0.01)-1/(cameraLightrange)) * cameraLightStrenght;
 	
-	if(pointLightResult.x < 0){
-		pointLightResult.x = 0;
-		pointLightResult.y = 0;
-		pointLightResult.z = 0;
+	if(cameraLightResult.x < 0){
+		cameraLightResult.x = 0;
+		cameraLightResult.y = 0;
+		cameraLightResult.z = 0;
 	}
 	
 	if(distanceXY < 0.01){
-		pointLightResult = cameraLightColor*10;
+		cameraLightResult = cameraLightColor*10;
 	}
 	vec4 light_4f;
-	light_4f.x = enviromentLight.x + pointLightResult.x;
-	light_4f.y = enviromentLight.y + pointLightResult.y;
-	light_4f.z = enviromentLight.z + pointLightResult.z;
+	/*light_4f.x = enviromentLight.x + cameraLightResult.x;
+	light_4f.y = enviromentLight.y + cameraLightResult.y;
+	light_4f.z = enviromentLight.z + cameraLightResult.z;*/
 	
-	//calculate pixel color on screen
-	out_Colour = texture(textureSampler, pass_textureCoords)*light_4f;
-
+	light_4f.x = cameraLightResult.x;
+	light_4f.y = cameraLightResult.y;
+	light_4f.z = cameraLightResult.z;
+	
+	return light_4f;
 }
+
+//************************************************/Camera**********************************************
+
+//************************************************Point Lights Array***********************************
+vec4 calculatePointLights(){
+
+	
+	return vec4(0,0,0,0);
+}
+
+void main(void){
+
+	//calculate pixel color on screen
+	out_Colour = texture(textureSampler, pass_textureCoords)* (calculateCameraLight() + enviromentLight + calculatePointLights());
+}
+
