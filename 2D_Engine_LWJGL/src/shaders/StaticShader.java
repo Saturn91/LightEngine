@@ -62,10 +62,10 @@ public class StaticShader extends ShaderProgramm{
 	
 	public void update(){
 		//update CameraLight
-		super.setShaderVariable2f("lightPosition", cameraLight.getPosition());
-		super.setShaderVariable3f("pointLightColor", cameraLight.getColor());
-		super.setShaderVariablef("pointLightStrenght", cameraLight.getStrenght());
-		super.setShaderVariablef("range", cameraLight.getRange());
+		super.setShaderVariable2f("cameraLightPosition", cameraLight.getPosition());
+		super.setShaderVariable3f("cameraLightColor", cameraLight.getColor());
+		super.setShaderVariablef("cameraLightStrenght", cameraLight.getStrenght());
+		super.setShaderVariablef("cameraLightrange", cameraLight.getRange());
 		
 		//update enviromentLight
 		super.setShaderVariable3f("enviromentLight", enviromentlight);

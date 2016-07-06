@@ -7,10 +7,10 @@ out vec4 out_Colour;
 
 uniform sampler2D textureSampler;	//is per default on Texture 0 -> see also renderer 
 uniform vec3 enviromentLight;
-uniform vec2 lightPosition;
-uniform vec3 pointLightColor;
-uniform float pointLightStrenght;
-uniform float range;
+uniform vec2 cameraLightPosition;
+uniform vec3 cameraLightColor;
+uniform float cameraLightStrenght;
+uniform float cameraLightrange;
 
 //screen Informations
 uniform float screenFormat;
@@ -18,15 +18,15 @@ uniform float screenFormat;
 void main(void){
 	//calculate Distance
 	
-	float distanceX = lightPosition.x - pass_position.x;
-	float distanceY = (lightPosition.y - pass_position.y) * screenFormat;
+	float distanceX = cameraLightPosition.x - pass_position.x;
+	float distanceY = (cameraLightPosition.y - pass_position.y) * screenFormat;
 	vec2 distance = vec2(distanceX, distanceY);
 	
 	float distanceXY = length(distance);
 	
 	//calculate light
 	vec3 pointLightResult;
-	pointLightResult = pointLightColor * (1/(distanceXY-0.01)-1/(range)) * pointLightStrenght;
+	pointLightResult = cameraLightColor * (1/(distanceXY-0.01)-1/(cameraLightrange)) * cameraLightStrenght;
 	
 	if(pointLightResult.x < 0){
 		pointLightResult.x = 0;
@@ -35,7 +35,7 @@ void main(void){
 	}
 	
 	if(distanceXY < 0.01){
-		pointLightResult = pointLightColor*10;
+		pointLightResult = cameraLightColor*10;
 	}
 	vec4 light_4f;
 	light_4f.x = enviromentLight.x + pointLightResult.x;
