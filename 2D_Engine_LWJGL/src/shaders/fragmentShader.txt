@@ -15,8 +15,8 @@ uniform vec3 enviromentLight;
 uniform float screenFormat;
 
 //*****************************************general Light*********************************
-vec3 getPixelLight(vec3 color, float distance, float range, float strenght){
-	return vec3(color*(1/(distance-0.01)-1/(range)) * strenght);
+vec3 getPixelLight(vec3 pixelColor, float pixelDistance, float pixelRange, float pixelStrenght){
+	return vec3(pixelColor*(1/(pixelDistance-0.01)-1/(pixelRange)) * pixelStrenght);
 }
 
 
@@ -64,7 +64,7 @@ vec3 calculateCameraLight(){
 #define MAX_LIGHTS 10
 uniform int numLights;
 uniform struct Light {
-   vec4 position;
+   vec3 position;
    vec3 color; 
    float strenght;
    float range;
@@ -80,12 +80,23 @@ vec3 calculatePointLights(){
 	
 		Light light = allLights[i];
 		
-		vec4 position = pass_view_projection * light.position;
+		vec4 position = pass_view_projection * vec4(light.position.x, light.position.y, 1, 1);
 		distanceX = position.x - pass_position.x;
 		distanceY = (position.y - pass_position.y) * screenFormat;
 		float distance = length(vec2(distanceX, distanceY));
 		vec3 lightResult = getPixelLight(light.color, distance, light.range, light.strenght);
-		if(length(lightResult) > 0){
+		
+		if(lightResult.x < 0){
+			lightResult.x = 0;
+			lightResult.y = 0;
+			lightResult.z = 0;
+		}
+	
+		if(distance < 0.01){
+			lightResult = light.color*10;
+		}
+		
+		if(length(lightResult)>0){
 			function_output += lightResult;
 		}
 		
@@ -96,6 +107,7 @@ vec3 calculatePointLights(){
 void main(void){
 
 	//calculate pixel color on screen
-	out_Colour = texture(textureSampler, pass_textureCoords) * vec4(calculateCameraLight() + enviromentLight + calculatePointLights(), 1);
+	vec3 finalLight = (calculateCameraLight() + enviromentLight + calculatePointLights());
+	out_Colour = texture(textureSampler, pass_textureCoords) * vec4(finalLight, 1);
 }
 

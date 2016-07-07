@@ -38,8 +38,10 @@ public class Game {
 		
 		//Start Shaderprogramm
 		shader.start();
+		
 		shader.update();
 		shader.loadViewMatrix(camera);
+		
 		
 		for(GameObject g: gameObjects){
 			//TODO check wich entities are on screen
@@ -62,8 +64,16 @@ public class Game {
 	}
 	
 	private Light lights[] = {
-		new Light(new Vector2f(2,0), new Vector3f(0f, 1f, 0f)),
-		new Light(new Vector2f(1,1), new Vector3f(0f, 0f, 1f))
+		new Light(new Vector2f(10,5), new Vector3f(1f, 1f, 1f)),
+		new Light(new Vector2f(5,5), new Vector3f(1f, 1f, 1f)),
+		new Light(new Vector2f(20,5), new Vector3f(1f, 1f, 1f)),
+		new Light(new Vector2f(5,10), new Vector3f(1f, 1f, 1f)),
+		new Light(new Vector2f(10,10), new Vector3f(1f, 1f, 1f)),
+		new Light(new Vector2f(15,13), new Vector3f(1f, 1f, 1f)),
+		new Light(new Vector2f(10,30), new Vector3f(1f, 1f, 1f)),
+		new Light(new Vector2f(20,15), new Vector3f(1f, 1f, 1f)),
+		new Light(new Vector2f(15,24), new Vector3f(1f, 1f, 1f)),
+		new Light(new Vector2f(3,1), new Vector3f(1f, 1f, 1f))
 	};
 	
 	/**
@@ -73,7 +83,7 @@ public class Game {
 		gameObjects = new ArrayList<>();
 		shader = new StaticShader();
 		shader.setEnviromentLight(new Vector3f(0.05f,0.05f,0.1f));
-		Light light = new Light(new Vector2f(0,0), new Vector3f(1f, 0f, 0f));
+		Light light = new Light(new Vector2f(0,0), new Vector3f(1f, 1f, 1f));
 		shader.configureCameraLight(light);
 		shader.setPointLights(lights);
 		camera = new Camera();
