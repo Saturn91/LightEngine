@@ -7,6 +7,7 @@ import game.entities.Light;
 import game.level.Map;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -63,12 +64,6 @@ public class Game {
 		gameObjects.add(gameObject);
 	}
 	
-	private Light lights[] = {
-		new Light(new Vector2f(5,10), new Vector3f(1f, 0f, 0f)),
-		new Light(new Vector2f(6,12), new Vector3f(0f, 1f, 0f)),
-		new Light(new Vector2f(7,10), new Vector3f(0f, 0f, 1f)),
-	};
-	
 	/**
 	 * build Game
 	 */
@@ -76,12 +71,35 @@ public class Game {
 		gameObjects = new ArrayList<>();
 		shader = new StaticShader();
 		shader.setEnviromentLight(new Vector3f(0.05f,0.05f,0.1f));
-		Light light = new Light(new Vector2f(0,0), new Vector3f(0f, 0f, 0f));
+		Light light = new Light(new Vector2f(0,0), new Vector3f(0.8f, 1.0f, 1.0f));
 		shader.configureCameraLight(light);
-		shader.setPointLights(lights);
+		shader.setPointLights(generateLights());
 		camera = new Camera();
 		renderer = new Renderer(shader);
 		renderer.setZoom(10);
 		map = new Map();
+	}
+	
+	public Vector3f generateColor(){
+		Random random = new Random();
+		float x = random.nextFloat();
+		float y = random.nextFloat();
+		float z = random.nextFloat();
+		return new Vector3f(x,y,z);
+	}
+	
+	public Vector2f generatePosition(){
+		Random random = new Random();
+		float x = random.nextFloat()*25f;
+		float y = random.nextFloat()*25f;
+		return new Vector2f(x,y);
+	}
+	
+	public Light[] generateLights(){
+		Light light[] = new Light[10];
+		for(int i = 0; i<10; i++){
+			light[i] = new Light(generatePosition(), generateColor());
+		}		
+		return light;
 	}
 }

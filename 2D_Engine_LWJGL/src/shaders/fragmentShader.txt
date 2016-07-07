@@ -76,7 +76,7 @@ vec3 calculatePointLights(){
 	vec3 function_output;
 	float distanceX;
 	float distanceY;
-	for(int i = 0; i < 10; i++){
+	for(int i = 0; i < MAX_LIGHTS; i++){
 	
 		Light light = allLights[i];
 		

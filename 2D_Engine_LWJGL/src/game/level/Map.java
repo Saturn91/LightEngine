@@ -31,7 +31,7 @@ public class Map {
 		
 		for(int x = 0; x < 25; x++){
 			for(int y = 0; y < 25; y++){
-				GameObject gameObject = new GameObject("canvas", new Vector2f(x, y), 1.0f, 0);
+				GameObject gameObject = new GameObject("Test", new Vector2f(x, y), 1.0f, 0);
 				Game.addEntity(gameObject);
 			}
 		}
