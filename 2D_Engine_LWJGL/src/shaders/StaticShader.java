@@ -73,7 +73,7 @@ public class StaticShader extends ShaderProgramm{
 		super.setShaderVariable3f("enviromentLight", enviromentlight);
 		
 		//update pointLights
-		if(lights.length <= 100){
+		if(lights.length <= 10){
 			for(int i = 0; i < lights.length; i++){
 				setShaderVariable3f("allLights[" + i + "].position", new Vector3f(lights[i].getPosition().x, lights[i].getPosition().y, 1));
 				setShaderVariable3f("allLights[" + i + "].color", lights[i].getColor());
