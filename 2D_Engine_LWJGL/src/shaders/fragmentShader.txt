@@ -26,7 +26,7 @@ uniform vec3 cameraLightColor;
 uniform float cameraLightStrenght;
 uniform float cameraLightrange;
 
-vec4 calculateCameraLight(){
+vec3 calculateCameraLight(){
 	//calculate Distance
 	
 	float distanceX = cameraLightPosition.x - pass_position.x;
@@ -47,16 +47,13 @@ vec4 calculateCameraLight(){
 	if(distanceXY < 0.01){
 		cameraLightResult = cameraLightColor*10;
 	}
-	vec4 light_4f;
-	/*light_4f.x = enviromentLight.x + cameraLightResult.x;
-	light_4f.y = enviromentLight.y + cameraLightResult.y;
-	light_4f.z = enviromentLight.z + cameraLightResult.z;*/
+	vec3 light_3f;
 	
-	light_4f.x = cameraLightResult.x;
-	light_4f.y = cameraLightResult.y;
-	light_4f.z = cameraLightResult.z;
+	light_3f.x = cameraLightResult.x;
+	light_3f.y = cameraLightResult.y;
+	light_3f.z = cameraLightResult.z;
 	
-	return light_4f;
+	return light_3f;
 }
 
 //************************************************/Camera**********************************************
@@ -75,7 +72,7 @@ uniform struct Light {
 
 in mat4 pass_view_projection;
 
-vec4 calculatePointLights(){
+vec3 calculatePointLights(){
 	vec3 function_output;
 	float distanceX;
 	float distanceY;
@@ -85,7 +82,7 @@ vec4 calculatePointLights(){
 		
 		vec4 position = pass_view_projection * light.position;
 		distanceX = position.x - pass_position.x;
-		distanceY = position.y * screenFormat;
+		distanceY = (position.y - pass_position.y) * screenFormat;
 		float distance = length(vec2(distanceX, distanceY));
 		vec3 lightResult = getPixelLight(light.color, distance, light.range, light.strenght);
 		if(length(lightResult) > 0){
@@ -93,12 +90,12 @@ vec4 calculatePointLights(){
 		}
 		
 	}
-	return vec4(function_output.x, function_output.y, function_output.z, 0);
+	return function_output;
 }
 
 void main(void){
 
 	//calculate pixel color on screen
-	out_Colour = texture(textureSampler, pass_textureCoords) * (calculateCameraLight() + enviromentLight + calculatePointLights());
+	out_Colour = texture(textureSampler, pass_textureCoords) * vec4(calculateCameraLight() + enviromentLight + calculatePointLights(), 1);
 }
 

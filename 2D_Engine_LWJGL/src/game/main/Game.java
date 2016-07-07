@@ -61,7 +61,10 @@ public class Game {
 		gameObjects.add(gameObject);
 	}
 	
-	
+	private Light lights[] = {
+		new Light(new Vector2f(2,0), new Vector3f(0f, 1f, 0f)),
+		new Light(new Vector2f(1,1), new Vector3f(0f, 0f, 1f))
+	};
 	
 	/**
 	 * build Game
@@ -70,8 +73,9 @@ public class Game {
 		gameObjects = new ArrayList<>();
 		shader = new StaticShader();
 		shader.setEnviromentLight(new Vector3f(0.05f,0.05f,0.1f));
-		Light light = new Light(new Vector2f(0,0), new Vector3f(1f, 0.8f, 0.5f));
+		Light light = new Light(new Vector2f(0,0), new Vector3f(1f, 0f, 0f));
 		shader.configureCameraLight(light);
+		shader.setPointLights(lights);
 		camera = new Camera();
 		renderer = new Renderer(shader);
 		renderer.setZoom(10);

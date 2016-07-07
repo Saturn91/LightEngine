@@ -7,6 +7,7 @@ import game.entities.Light;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import toolbox.Maths;
 
@@ -20,6 +21,7 @@ public class StaticShader extends ShaderProgramm{
 	private int location_viewMatrix;
 	private Light cameraLight = new Light(new Vector2f(0,0), new Vector3f(1, 1, 1));
 	private Vector3f enviromentlight = new Vector3f(0, 0, 0); 
+	private Light lights[];
 
 	public StaticShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -69,6 +71,23 @@ public class StaticShader extends ShaderProgramm{
 		
 		//update enviromentLight
 		super.setShaderVariable3f("enviromentLight", enviromentlight);
+		
+		//update pointLightssss
+		if(lights.length <= 10){
+			for(int i = 0; i < lights.length; i++){
+				setShaderVariable4f("allLights[" + i + "].position", new Vector4f(lights[i].getPosition().x, lights[i].getPosition().y, 0,0));
+				setShaderVariable3f("allLights[" + i + "].color", lights[i].getColor());
+				setShaderVariablef("allLights[" + i + "].strenght", lights[i].getStrenght());
+				setShaderVariablef("allLights[" + i + "].range", lights[i].getRange());
+			}
+		}else{
+			System.err.println("StaticShader: at the moment only 10 lights are allowed!");
+		}
+	}
+	
+	public void setPointLights(Light lights[]){
+		this.lights = lights;
+		
 	}
 	
 	
