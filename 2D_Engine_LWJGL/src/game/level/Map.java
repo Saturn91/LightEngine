@@ -24,18 +24,14 @@ public class Map {
 		GameObject.addEntity("Test", entity);
 		
 		RawModel model2= loader.loadToVAO(Constants.QuadVerticies(1, 1), Constants.TextureCords(), Constants.QuadIndices());
-		ModelTexture texture2 = new ModelTexture(loader.loadTexture("image"));
+		ModelTexture texture2 = new ModelTexture(loader.loadTexture("canvas_white"));
 		TexturedModel staticModel2 = new TexturedModel(model2, texture2);
 		Entity entity2 = new Entity(staticModel2);
-		GameObject.addEntity("Test2", entity2);
-		
-		for(int i = 1; i < 10; i++){
-			Game.addEntity(new GameObject("Test2", new Vector2f(0.5f*i,0.5f*i),  1, i));
-		}
+		GameObject.addEntity("canvas", entity2);
 		
 		for(int x = 0; x < 25; x++){
 			for(int y = 0; y < 25; y++){
-				GameObject gameObject = new GameObject("Test", new Vector2f(x, y), 1.0f, 0);
+				GameObject gameObject = new GameObject("canvas", new Vector2f(x, y), 1.0f, 0);
 				Game.addEntity(gameObject);
 			}
 		}
