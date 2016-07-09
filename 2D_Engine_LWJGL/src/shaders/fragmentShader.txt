@@ -109,11 +109,10 @@ void main(void){
 	//calculate pixel color on screen
 	vec3 finalLight = (calculateCameraLight() + enviromentLight + calculatePointLights());
 	vec4 textureColor = texture2D(textureSampler, pass_textureCoords);
-	if (textureColor.w < 1){
-		out_Colour = vec4(1,0,0,1); 
-	}else{
-	 	out_Colour = vec4(0,1,0,1);
+	out_Colour = textureColor * vec4(finalLight, 1);
+	
+	if(textureColor.a < 0.5){
+		discard;
 	}
-	//out_Colour = texture(textureSampler, pass_textureCoords) * vec4(finalLight, 1);
 }
 
