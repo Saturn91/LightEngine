@@ -12,7 +12,7 @@ public class GameObject {
 	private float scale;
 	private int layer;
 	private float renderLayer;
-	private static final float layerDistance = 0.001f;
+	private static final float layerDistance = 0.01f;
 	
 	private String thisName;
 	

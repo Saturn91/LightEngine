@@ -38,6 +38,7 @@ public Renderer(StaticShader shader) {
 	public void prepare(){
 		GL11.glEnable(GL11.GL_DEPTH_TEST);		//fix rendering of different Triangels on top of each other
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glClearColor(0, 0, 0, 1); 		//black Background
 	}
 	

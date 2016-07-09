@@ -41,6 +41,7 @@ public class Game {
 		shader.start();
 		
 		shader.update();
+		
 		shader.loadViewMatrix(camera);
 		
 		
@@ -70,7 +71,7 @@ public class Game {
 	public void init(){
 		gameObjects = new ArrayList<>();
 		shader = new StaticShader();
-		shader.setEnviromentLight(new Vector3f(0.05f,0.02f,0.1f));
+		shader.setEnviromentLight(new Vector3f(1f,1f,1f));
 		Light light = new Light(new Vector2f(0,0), new Vector3f(0.3f, 0.2f, 0.3f));
 		shader.configureCameraLight(light);
 		shader.setPointLights(generateLights());
