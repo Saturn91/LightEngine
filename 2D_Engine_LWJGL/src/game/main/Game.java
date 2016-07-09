@@ -71,8 +71,8 @@ public class Game {
 	public void init(){
 		gameObjects = new ArrayList<>();
 		shader = new StaticShader();
-		shader.setEnviromentLight(new Vector3f(1f,1f,1f));
-		Light light = new Light(new Vector2f(0,0), new Vector3f(0.3f, 0.2f, 0.3f));
+		shader.setEnviromentLight(new Vector3f(0,0,0));
+		Light light = new Light(new Vector2f(0,0), new Vector3f(0.8f, 0.6f, 0.8f));
 		shader.configureCameraLight(light);
 		shader.setPointLights(generateLights());
 		camera = new Camera();

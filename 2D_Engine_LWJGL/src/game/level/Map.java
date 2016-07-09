@@ -29,6 +29,9 @@ public class Map {
 		Entity entity2 = new Entity(staticModel2);
 		GameObject.addEntity("wall", entity2);
 		
+		Game.addEntity(new GameObject("Test", new Vector2f(-2,-2), 2, 1));
+		Game.addEntity(new GameObject("Test", new Vector2f(1,1), 2, 1));
+		
 		for(int x = 0; x < 25; x++){
 			for(int y = 0; y < 25; y++){
 				GameObject gameObject = new GameObject("wall", new Vector2f(x, y), 1.0f, 0);
@@ -36,7 +39,9 @@ public class Map {
 			}
 		}
 		
-		Game.addEntity(new GameObject("Test", new Vector2f(-2,-2), 1, 1));
-		Game.addEntity(new GameObject("Test", new Vector2f(1,1), 1, 1));
+		/*
+		 * Attention! the order of rendering is very importent
+		 */
+		
 	}
 }

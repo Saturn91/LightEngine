@@ -6,8 +6,8 @@ import org.lwjgl.util.vector.Vector3f;
 public class Light {
 	private Vector2f position;
 	private Vector3f color;
-	private float strenght = 2.5f;	
-	private float range = 7.5f;
+	private float strenght = 3f;	
+	private float range = 10f;
 	public Light(Vector2f position, Vector3f color) {
 		super();
 		this.position = position;

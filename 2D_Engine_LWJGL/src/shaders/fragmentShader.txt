@@ -16,7 +16,7 @@ uniform float screenFormat;
 
 //*****************************************general Light*********************************
 vec3 getPixelLight(vec3 pixelColor, float pixelDistance, float pixelRange, float pixelStrenght){
-	return vec3(pixelColor*(1/(pixelDistance-0.01)-1/(pixelRange)) * pixelStrenght);
+	return vec3(pixelColor*(1/(pixelDistance+0.5)-1/(pixelRange)) * pixelStrenght);
 }
 
 
@@ -37,15 +37,17 @@ vec3 calculateCameraLight(){
 	
 	//calculate light
 	vec3 cameraLightResult = getPixelLight(cameraLightColor, distanceXY, cameraLightrange, cameraLightStrenght);
-
+	
+	//range correction
 	if(cameraLightResult.x < 0){
 		cameraLightResult.x = 0;
 		cameraLightResult.y = 0;
 		cameraLightResult.z = 0;
 	}
 	
-	if(distanceXY < 0.01){
-		cameraLightResult = cameraLightColor*10;
+	//Black Dot correction
+	if(distanceXY < 0.1){
+		cameraLightResult = cameraLightColor*5;
 	}
 	vec3 light_3f;
 	
@@ -92,8 +94,8 @@ vec3 calculatePointLights(){
 			lightResult.z = 0;
 		}
 	
-		if(distance < 0.01){
-			lightResult = light.color*10;
+		if(distance < 0.1){
+			lightResult = light.color*5;
 		}
 		
 		if(length(lightResult)>0){
